@@ -62,7 +62,7 @@ module.exports = class PersonController {
     }
 
     // const data = await repository.find(filter)
-    const data = await repository.paginate(filter, options)
+    const data = await repository.find(filter, options)
     if (data) {
       ctx.body = data
     } else {
