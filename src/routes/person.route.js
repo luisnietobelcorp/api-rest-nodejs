@@ -9,12 +9,17 @@ const KoaRouter = require('koa-router')
 const PersonController = require('../controllers/person.controller')
 const router = new KoaRouter({ prefix: '/person' })
 const controller = new PersonController()
+const personSchemas = require('../schemas/person.schema')
+const schemavalidator = require('../utils/schema-validator')
+
+const byIndexValidator = schemavalidator({ params: personSchemas.byIndex })
+const postValidator = schemavalidator({ params: personSchemas.post })
 
 // GET /person/29
-router.get('person/byIndex', '/:index', controller.getByIndex)
+router.get('person/byIndex', '/:index', byIndexValidator, controller.getByIndex)
 
 // POST
-router.post('person/post', '/', controller.save)
+router.post('person/post', '/', postValidator, controller.save)
 
 router.post('person/byParameters', '/:page', controller.getByParameters)
 
